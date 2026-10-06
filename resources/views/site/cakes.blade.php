@@ -4,31 +4,16 @@
 @endphp
 
 <x-site.layout page="cakes" :title="__('koba.meta.pages.cakes')" :description="__('koba.cakes_page.lede')" image="cake-opera-caramel">
-    <header class="cakes-hero">
-        <div class="wrap grid cakes-hero__grid">
-            <div class="cakes-hero__copy">
-                <nav class="page-hero__crumbs" aria-label="Breadcrumb" data-reveal>
-                    <a class="u-link" href="{{ route('home') }}">KOBA</a>
-                    <span aria-hidden="true">/</span>
-                    <span aria-current="page">{{ __('koba.cakes_page.eyebrow') }}</span>
-                </nav>
-                <x-site.heading :text="__('koba.cakes_page.title')" tag="h1" size="l" :delay="1" />
-                <p class="lede" data-reveal style="--d: 4">{{ __('koba.cakes_page.lede') }}</p>
-                <div class="btn-row" data-reveal style="--d: 5">
-                    <a class="btn" href="{{ route('order') }}">{{ __('koba.cakes_page.cta') }} <x-site.arrow /></a>
-                    <a class="link" href="#signature">{{ __('koba.cakes_feature.cta_explore') }}</a>
-                </div>
-            </div>
-            <div class="cakes-hero__media">
-                <div class="cakes-hero__main media" data-reveal="media">
-                    <x-site.img src="cake-opera-chocolate" :eager="true" sizes="(min-width: 900px) 34vw, 70vw" position="50% 60%" />
-                </div>
-                <div class="cakes-hero__second media" data-reveal="media" style="--d: 3" data-parallax="-0.08">
-                    <x-site.img src="opera-slice" sizes="(min-width: 900px) 18vw, 40vw" />
-                </div>
-            </div>
-        </div>
-    </header>
+    @include('site.partials.page-hero', [
+        'eyebrow' => __('koba.cakes_page.eyebrow'),
+        'title' => __('koba.cakes_page.title'),
+        'lede' => __('koba.cakes_page.lede'),
+        'slides' => [['cake-opera-chocolate', '50% 58%'], ['cake-trio', '50% 58%'], ['cake-meringue', '50% 58%'], ['cake-chocolate-fudge', '50% 58%'], ['cake-red-velvet', '50% 58%']],
+        'actions' => [
+            [__('koba.cakes_page.cta'), route('order'), true],
+            [__('koba.cakes_feature.cta_explore'), '#signature'],
+        ],
+    ])
 
     {{-- The Signature Five — hover index --}}
     <section class="signature section is-white" id="signature" aria-labelledby="signature-title" data-feature>

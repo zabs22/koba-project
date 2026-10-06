@@ -3,8 +3,7 @@
         'eyebrow' => __('koba.story.eyebrow'),
         'title' => __('koba.story.title'),
         'lede' => __('koba.story.lede'),
-        'image' => 'craft-almond',
-        'position' => '50% 40%',
+        'slides' => [['croissant', '50% 55%'], ['craft-almond', '50% 45%'], ['craft-crumb', '50% 50%'], ['opera-slice', '50% 60%']],
     ])
 
     {{-- Chapters --}}

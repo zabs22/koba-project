@@ -12,6 +12,8 @@
         'eyebrow' => __('koba.order.eyebrow'),
         'title' => __('koba.order.title'),
         'lede' => __('koba.order.lede'),
+        'slides' => [['cake-opera-caramel', '50% 58%'], ['cake-cheesecake', '50% 58%'], ['cake-vanilla', '50% 58%'], ['cake-chocolate-fudge', '50% 58%']],
+        'compact' => true,
     ])
 
     <section class="order section--tight is-white" aria-label="{{ __('koba.order.eyebrow') }}">

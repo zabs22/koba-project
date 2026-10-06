@@ -5,7 +5,7 @@
 import { $ } from './site/util';
 import { initLoader, initCurtain, initHeader, initOverlayMenu, initCursor } from './site/shell';
 import { initReveals, initParallax, initHeroParallax, initScrub, initManifesto } from './site/motion';
-import { initTabs, initPrinciples, initLocations, initFeatures, initCarousels, initMarquees } from './site/components';
+import { initTabs, initPrinciples, initLocations, initFeatures, initCarousels, initMarquees, initHeroSliders } from './site/components';
 
 initCurtain();
 initHeader();
@@ -15,6 +15,7 @@ initTabs();
 initPrinciples();
 initLocations();
 initFeatures();
+initHeroSliders();
 initCarousels();
 initMarquees();
 initParallax();

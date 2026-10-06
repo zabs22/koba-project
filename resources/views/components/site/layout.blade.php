@@ -90,7 +90,7 @@
 
     <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
 </head>
-<body data-page="{{ $page }}">
+<body data-page="{{ $page }}" @class(['has-dark-hero' => $page !== 'home'])>
     <a class="skip-link" href="#main">{{ __('koba.ui.skip') }}</a>
 
     <div class="loader" aria-hidden="true">

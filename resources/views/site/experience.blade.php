@@ -3,8 +3,7 @@
         'eyebrow' => __('koba.experience_page.eyebrow'),
         'title' => __('koba.experience_page.title'),
         'lede' => __('koba.experience_page.lede'),
-        'image' => 'drink-iced-latte',
-        'position' => '50% 40%',
+        'slides' => [['drink-iced-latte-terrace', '50% 45%'], ['drink-tea-pour', '50% 55%'], ['drink-iced-mocha', '50% 50%'], ['drink-layered-terrace', '50% 55%']],
     ])
 
     {{-- A day at KOBA: morning → afternoon → evening --}}

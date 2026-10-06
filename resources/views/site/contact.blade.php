@@ -5,6 +5,8 @@
         'eyebrow' => __('koba.contact.eyebrow'),
         'title' => __('koba.contact.title'),
         'lede' => __('koba.contact.lede'),
+        'slides' => [['drink-cappuccino', '50% 55%'], ['drink-chocolate-pour', '50% 55%'], ['drink-mocha', '50% 55%']],
+        'compact' => true,
     ])
 
     <section class="contact section--tight is-white" aria-label="{{ __('koba.contact.eyebrow') }}">

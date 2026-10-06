@@ -1,4 +1,4 @@
-import { $, $$, clamp, pad, finePointer } from './util';
+import { $, $$, clamp, pad, finePointer, reduceMotion } from './util';
 
 /* ---------- Accessible tabs (horizontal or vertical) --------------------- */
 
@@ -205,4 +205,76 @@ export function initMarquees() {
         });
     });
     marquees.forEach((m) => observer.observe(m));
+}
+
+/* ---------- Inner-page hero slideshow ------------------------------------ */
+
+export function initHeroSliders() {
+    $$('[data-hero-slider]').forEach((hero) => {
+        const slides = $$('[data-slide]', hero);
+        const dots = $$('[data-slide-to]', hero);
+        const toggle = $('[data-slide-pause]', hero);
+        if (slides.length < 2) return;
+
+        const duration = Number(hero.dataset.interval) || 7000;
+        hero.style.setProperty('--slide-ms', `${duration}ms`);
+        let index = 0;
+        let timer = null;
+        let userPaused = false;
+        const holds = new Set();
+
+        const show = (next) => {
+            index = (next + slides.length) % slides.length;
+            slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+            dots.forEach((dot, i) => {
+                const active = i === index;
+                dot.classList.remove('is-active');
+                if (active) {
+                    void dot.offsetWidth; // restart the progress bar
+                    dot.classList.add('is-active');
+                    dot.setAttribute('aria-current', 'true');
+                } else {
+                    dot.removeAttribute('aria-current');
+                }
+            });
+            // Warm the next image so the crossfade never shows a blank frame.
+            const upcoming = $('img', slides[(index + 1) % slides.length]);
+            if (upcoming && upcoming.loading === 'lazy') upcoming.loading = 'eager';
+            schedule();
+        };
+
+        const running = () => !reduceMotion && !userPaused && holds.size === 0;
+
+        const schedule = () => {
+            clearTimeout(timer);
+            hero.classList.toggle('is-paused', !running() && !reduceMotion);
+            if (running()) timer = setTimeout(() => show(index + 1), duration);
+        };
+
+        const hold = (reason, on) => {
+            if (on) holds.add(reason); else holds.delete(reason);
+            // Resuming restarts the current slide's timer and progress bar.
+            if (!on && running()) show(index); else schedule();
+        };
+
+        if (reduceMotion) hero.classList.add('is-static');
+
+        dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+
+        toggle?.addEventListener('click', () => {
+            userPaused = !userPaused;
+            toggle.setAttribute('aria-label', userPaused ? toggle.dataset.labelPlay : toggle.dataset.labelPause);
+            if (userPaused) schedule(); else show(index);
+        });
+
+        hero.addEventListener('focusin', () => hold('focus', true));
+        hero.addEventListener('focusout', (event) => { if (!hero.contains(event.relatedTarget)) hold('focus', false); });
+        document.addEventListener('visibilitychange', () => hold('hidden', document.hidden));
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(([entry]) => hold('offscreen', !entry.isIntersecting)).observe(hero);
+        }
+
+        show(0);
+    });
 }

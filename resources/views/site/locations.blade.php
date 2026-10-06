@@ -3,6 +3,7 @@
         'eyebrow' => __('koba.locations_page.eyebrow'),
         'title' => __('koba.locations_page.title'),
         'lede' => __('koba.locations_page.lede'),
+        'slides' => [['drink-iced-latte-terrace', '50% 45%'], ['drink-macchiato', '50% 55%'], ['drink-iced-americano', '50% 50%']],
     ])
 
     @include('site.sections.locations', ['full' => true])

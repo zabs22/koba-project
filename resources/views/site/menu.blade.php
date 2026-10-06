@@ -5,6 +5,7 @@
         'eyebrow' => __('koba.menu_page.eyebrow'),
         'title' => __('koba.menu_page.title'),
         'lede' => __('koba.menu_page.lede'),
+        'slides' => [['almond-croissant', '50% 48%'], ['drink-flat-white', '50% 55%'], ['bomboloni', '50% 48%'], ['croissant', '50% 55%']],
     ])
 
     <div class="menu-bar" data-menu-bar>
