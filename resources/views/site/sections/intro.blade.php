@@ -2,14 +2,13 @@
     <x-site.leaf class="intro__leaf" data-parallax="-0.08" />
 
     <div class="wrap grid intro__grid">
-        <p class="intro__label vertical-label" data-reveal>
-            <span class="eyebrow eyebrow--plain">{{ __('koba.intro.eyebrow') }}</span>
-            <span class="intro__est">{{ __('koba.intro.founded') }}</span>
-        </p>
-
         <div class="intro__statement">
             <span class="intro__glyph ethiopic" aria-hidden="true" data-reveal="fade">ኮባ</span>
             <x-site.heading id="intro-title" :text="__('koba.intro.title')" size="mega" />
+            <p class="intro__label" data-reveal style="--d: 3">
+                <span class="eyebrow">{{ __('koba.intro.eyebrow') }}</span>
+                <span class="intro__est">{{ __('koba.intro.founded') }}</span>
+            </p>
         </div>
 
         <figure class="intro__figure" data-parallax="0.06">

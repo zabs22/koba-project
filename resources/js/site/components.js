@@ -278,3 +278,37 @@ export function initHeroSliders() {
         show(0);
     });
 }
+/* ---------- Signature creations: dish hover previews --------------------- */
+
+export function initDishPreviews() {
+    $$('[data-dishes]').forEach((panel) => {
+        const links = $$('[data-dish]', panel);
+        const images = $$('[data-dish-image]', panel);
+        const caption = $('[data-dish-caption]', panel);
+        const poster = $('.cpanel__poster', panel);
+        const posterItems = $$('[data-dish-poster]', panel);
+        const list = $('.cpanel__items', panel);
+        const defaultCaption = caption?.textContent;
+
+        const preview = (link) => {
+            const slug = link ? link.dataset.dish : '';
+            const hasImage = images.some((img) => img.dataset.dishImage === slug && slug);
+            images.forEach((img) => img.classList.toggle('is-active', img.dataset.dishImage === (hasImage ? slug : '')));
+            if (caption) caption.textContent = link ? link.dataset.dishName : defaultCaption;
+            links.forEach((other) => other.classList.toggle('is-active', other === link));
+            poster?.classList.toggle('has-focus', Boolean(link));
+            posterItems.forEach((item) => item.classList.toggle('is-active', item.dataset.dishPoster === slug));
+        };
+
+        links.forEach((link) => {
+            link.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') preview(link); });
+            link.addEventListener('focus', () => preview(link));
+        });
+        list.addEventListener('pointerleave', () => preview(null));
+        list.addEventListener('focusout', (event) => { if (!list.contains(event.relatedTarget)) preview(null); });
+
+        // Warm the dish photographs once the panel is first shown.
+        const warm = () => images.forEach((img) => { img.loading = 'eager'; });
+        list.addEventListener('pointerenter', warm, { once: true });
+    });
+}

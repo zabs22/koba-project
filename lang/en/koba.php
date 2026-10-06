@@ -106,6 +106,7 @@ return [
         'eyebrow' => 'Signature Creations',
         'title' => 'Something Delicious|*for Every Moment.*',
         'cta' => 'View Full Menu',
+        'view_all' => 'All :category',
         'categories' => [
             'cakes' => [
                 'label' => 'Cakes',

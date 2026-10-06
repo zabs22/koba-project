@@ -374,6 +374,19 @@
     transition: font-weight 0.6s var(--ease);
 }
 .menu-item:hover { transform: translateX(10px); color: var(--g-600); }
+/* Arriving from a homepage link: land below the sticky bars and mark the dish. */
+.menu-item { scroll-margin-top: calc(var(--header-h) + 160px); position: relative; }
+.menu-item:target { color: var(--g-600); }
+.menu-item:target .menu-item__name { font-weight: 800; }
+.menu-item:target::before {
+    content: "";
+    position: absolute;
+    inset: 0 -16px;
+    z-index: -1;
+    background: var(--sand-200);
+    animation: dish-flash 2.6s var(--ease) both;
+}
+@keyframes dish-flash { 0%, 55% { opacity: 1; } 100% { opacity: 0.35; } }
 .menu-item:hover .menu-item__name { font-weight: 700; }
 
 .menu-empty { padding-block: 96px; font-family: var(--f-display); font-size: var(--t-m); font-weight: 200; }
