@@ -1,2 +1,8 @@
 User-agent: *
-Disallow:
+Disallow: /dashboard
+Disallow: /user/
+Disallow: /login
+Disallow: /register
+
+# Set the production domain before launch:
+# Sitemap: https://kobapatisserie.com/sitemap.xml
