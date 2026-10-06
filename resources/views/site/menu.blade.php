@@ -48,7 +48,7 @@
 
                     <ol class="list-reset menu-list">
                         @foreach ($section['items'] as $item)
-                            <li class="menu-item" data-menu-item data-name="{{ \Illuminate\Support\Str::lower(\Illuminate\Support\Str::ascii($item)) }}">
+                            <li class="menu-item" id="dish-{{ \Illuminate\Support\Str::slug($item) }}" data-menu-item data-name="{{ \Illuminate\Support\Str::lower(\Illuminate\Support\Str::ascii($item)) }}">
                                 <span class="index">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                                 <span class="menu-item__name">{{ $item }}</span>
                             </li>

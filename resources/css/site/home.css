@@ -139,22 +139,24 @@
 
 .intro__grid { position: relative; row-gap: clamp(48px, 7vw, 112px); }
 
+.intro__statement { grid-column: 1 / -1; position: relative; isolation: isolate; }
+
+/* Horizontal label under the headline: "The KOBA Experience — Est. 2020 · Addis Ababa" */
 .intro__label {
-    grid-column: 1;
-    grid-row: 1 / span 2;
     display: flex;
-    gap: 22px;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-end;
-    align-self: start;
+    gap: 10px 22px;
+    margin-top: clamp(24px, 2.6vw, 40px);
     color: var(--ink-faint);
     font-size: var(--t-micro);
-    letter-spacing: 0.16em;
+    font-weight: 600;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
 }
 .intro__label .eyebrow { color: var(--brown); }
-
-.intro__statement { grid-column: 2 / -1; position: relative; isolation: isolate; }
+.intro__est { display: inline-flex; align-items: center; gap: 22px; }
+.intro__est::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--sand); }
 .intro__statement .display { position: relative; max-width: 11ch; }
 .intro__statement .display em { color: var(--g-600); }
 
@@ -170,7 +172,7 @@
     z-index: -1;
 }
 
-.intro__figure { grid-column: 2 / span 4; align-self: start; }
+.intro__figure { grid-column: 1 / span 5; align-self: start; }
 .intro__figure .media { aspect-ratio: 4 / 5; }
 
 .caption {
@@ -204,8 +206,9 @@
 .intro__rituals .mark { width: 12px; flex: none; color: var(--sand); }
 
 @media (max-width: 899px) {
-    .intro__label { grid-column: 1 / -1; grid-row: auto; writing-mode: horizontal-tb; transform: none; justify-content: flex-start; flex-wrap: wrap; }
     .intro__statement { grid-column: 1 / -1; }
+    .intro__label { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .intro__est::before { display: none; }
     .intro__figure { grid-column: 1 / span 8; }
     .intro__body { grid-column: 1 / -1; }
 }
@@ -320,6 +323,20 @@
    04 — Signature creations
    ========================================================================== */
 
+.creations { overflow: hidden; }
+.creations__wrap { position: relative; }
+.creations__leaf {
+    right: -22%;
+    top: 34%;
+    width: min(1100px, 76vw);
+    color: var(--g-700);
+    --rib: var(--cream);
+    opacity: 0.16;
+    transform: rotate(196deg);
+}
+@media (max-width: 899px) {
+    .creations__leaf { right: -40%; top: auto; bottom: 2%; width: 150vw; opacity: 0.12; }
+}
 .creations__head { align-items: end; row-gap: 24px; }
 .creations__heading { grid-column: 1 / span 8; display: grid; gap: 28px; justify-items: start; }
 .creations__more { grid-column: 10 / -1; justify-self: end; }
@@ -377,6 +394,30 @@
     width: 100%;
 }
 
+/* Stacked photographs: the hovered dish fades in over the category image. */
+.cpanel__feature > .cpanel__img {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 0.8s var(--ease), transform 1.6s var(--ease-out);
+}
+.cpanel__feature > .cpanel__img.is-active { opacity: 1; transform: scale(1); }
+.cpanel__caption {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    z-index: 2;
+    padding: 10px 16px;
+    background: var(--cream);
+    color: var(--g-900);
+    font-size: var(--t-micro);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: opacity 0.4s var(--ease);
+}
+
 .cpanel__poster {
     position: relative;
     display: flex;
@@ -409,6 +450,9 @@
     letter-spacing: -0.02em;
 }
 .cpanel__poster-list li:nth-child(odd) { font-weight: 800; }
+.cpanel__poster-list li { transition: color 0.5s var(--ease), opacity 0.5s var(--ease), transform 0.7s var(--ease-out); }
+.cpanel__poster.has-focus li { opacity: 0.32; }
+.cpanel__poster.has-focus li.is-active { opacity: 1; color: var(--sand); transform: translateX(12px); }
 .cpanel__poster-mark { position: absolute; right: clamp(28px, 4vw, 64px); top: clamp(28px, 4vw, 64px); width: 34px; color: var(--sand); }
 
 .cpanel__aside {
@@ -428,17 +472,32 @@
     color: var(--sand);
 }
 .cpanel__items { width: 100%; border-top: 1px solid var(--line); }
-.cpanel__items li {
-    padding-block: 12px;
-    border-bottom: 1px solid var(--line);
-    font-size: var(--t-small);
+.cpanel__items li { border-bottom: 1px solid var(--line); }
+.cpanel__dish {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding-block: 13px;
     font-weight: 500;
-    letter-spacing: 0.02em;
+    transition: color 0.4s var(--ease), padding 0.6s var(--ease-out);
 }
-.cpanel__support { width: 72%; aspect-ratio: 3 / 4; margin-top: 16px; align-self: flex-end; }
+.cpanel__dish .index { color: var(--brown); }
+.cpanel__dish-name { font-size: 1rem; letter-spacing: 0.01em; transition: font-weight 0.5s var(--ease); }
+.cpanel__dish .icon-arrow { opacity: 0; transform: translateX(-8px); transition: opacity 0.4s var(--ease), transform 0.6s var(--ease-out); }
+.cpanel__dish:hover,
+.cpanel__dish:focus-visible,
+.cpanel__dish.is-active { color: var(--g-600); padding-left: 10px; }
+.cpanel__dish:hover .cpanel__dish-name,
+.cpanel__dish:focus-visible .cpanel__dish-name,
+.cpanel__dish.is-active .cpanel__dish-name { font-weight: 700; }
+.cpanel__dish:hover .icon-arrow,
+.cpanel__dish:focus-visible .icon-arrow,
+.cpanel__dish.is-active .icon-arrow { opacity: 1; transform: none; }
+.cpanel__all { margin-top: 8px; }
 
 .js .cpanel.is-active .cpanel__feature { animation: clip-up 1.3s var(--ease-in-out) both; }
-.js .cpanel.is-active .cpanel__feature img { animation: settle 2s var(--ease-out) both; }
+.js .cpanel.is-active .cpanel__feature > .cpanel__img[data-dish-image=""] { animation: settle 2s var(--ease-out) both; }
 .js .cpanel.is-active .cpanel__aside > * { animation: fade-up 1s var(--ease-out) both; }
 .js .cpanel.is-active .cpanel__aside > :nth-child(2) { animation-delay: 0.08s; }
 .js .cpanel.is-active .cpanel__aside > :nth-child(3) { animation-delay: 0.16s; }
@@ -453,7 +512,7 @@
     .creations__heading, .creations__more { grid-column: 1 / -1; justify-self: start; }
     .cpanel__feature { grid-column: 1 / -1; aspect-ratio: 4 / 4.4; }
     .cpanel__aside { grid-column: 1 / -1; padding-top: 32px; }
-    .cpanel__no, .cpanel__support { display: none; }
+    .cpanel__no { display: none; }
 }
 
 /* ==========================================================================

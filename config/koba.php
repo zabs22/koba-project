@@ -63,6 +63,26 @@ return [
         'craft-almond' => [2080, 1685, [480, 960, 1600], 'Close-up of toasted almonds on a croissant'],
     ],
 
+    /*
+    | Dish photographs, keyed by Str::slug() of the dish name. Dishes without
+    | a real photograph are simply left out — never substitute another dish.
+    */
+    'dish_images' => [
+        'trio' => 'cake-trio',
+        'chocolate-fudge' => 'cake-chocolate-fudge',
+        'opera-caramel' => 'cake-opera-caramel',
+        'vanilla-eclair' => 'cake-vanilla',
+        'cheesecake' => 'cake-cheesecake',
+        'koba-croissant' => 'croissant',
+        'almond-croissant' => 'almond-croissant',
+        'pecan-tart' => 'pecan-tart',
+        'eclair' => 'eclair',
+        'espresso-milk-coffee' => 'drink-macchiato',
+        'tea' => 'drink-tea-pour',
+        'iced-coffee' => 'drink-iced-latte',
+        'fresh-cold-drinks' => 'drink-mojito',
+    ],
+
     'email' => 'hello@kobapatisserie.com',
 
     // Replace with the official profile URLs.
