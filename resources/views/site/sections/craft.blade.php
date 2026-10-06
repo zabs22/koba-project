@@ -1,3 +1,17 @@
+@php
+    // Balance the masonry: place each photograph in the currently shortest
+    // column, using its real proportions, so the three columns end level.
+    $items = trans('koba.craft.items');
+    $columns = [[], [], []];
+    $heights = [0, 0, 0];
+    foreach ($items as $i => $item) {
+        [$w, $h] = config('koba.images.'.$item['image']);
+        $shortest = array_search(min($heights), $heights);
+        $columns[$shortest][] = $i;
+        $heights[$shortest] += $h / $w;
+    }
+@endphp
+
 <section class="craft section is-white" aria-labelledby="craft-title">
     <div class="wrap">
         <header class="grid craft__head">
@@ -8,21 +22,25 @@
             <p class="lede craft__lede" data-reveal>“{{ __('koba.craft.body') }}”</p>
         </header>
 
-        <ol class="craft__grid list-reset">
-            @foreach (trans('koba.craft.items') as $i => $item)
-                <li class="craft__item craft__item--{{ $i + 1 }}" data-parallax="{{ [0.04, -0.05, 0.07, -0.03, 0.05][$i] }}">
-                    <figure>
-                        <div class="media hover-zoom" data-reveal="media">
-                            <x-site.img :src="$item['image']" sizes="(min-width: 900px) 40vw, 90vw" />
-                        </div>
-                        <figcaption class="craft__caption" data-reveal>
-                            <span class="index">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                            <strong class="display display--s">{{ $item['title'] }}</strong>
-                            <span>{{ $item['line'] }}</span>
-                        </figcaption>
-                    </figure>
-                </li>
+        {{-- Masonry: photographs keep their proportions and stack tightly. --}}
+        <div class="craft__masonry">
+            @foreach ($columns as $c => $indexes)
+                <ol class="craft__col list-reset">
+                    @foreach ($indexes as $i)
+                        @php($item = $items[$i])
+                        <li class="craft__tile">
+                            <figure class="craft__figure media" data-reveal="media" style="--d: {{ $c + $loop->index }}">
+                                <x-site.img :src="$item['image']" sizes="(min-width: 1100px) 31vw, (min-width: 600px) 46vw, 46vw" />
+                                <figcaption class="craft__caption">
+                                    <span class="index">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <strong>{{ $item['title'] }}</strong>
+                                    <span class="craft__line">{{ $item['line'] }}</span>
+                                </figcaption>
+                            </figure>
+                        </li>
+                    @endforeach
+                </ol>
             @endforeach
-        </ol>
+        </div>
     </div>
 </section>

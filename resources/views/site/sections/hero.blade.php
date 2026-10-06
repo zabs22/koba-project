@@ -18,18 +18,12 @@
         </div>
     </div>
 
-    <div class="hero__media">
-        <div class="hero__frame media" data-mouse="10">
-            <x-site.img src="croissant" :eager="true" sizes="(min-width: 768px) 60vw, 100vw" position="50% 54%" />
+    {{-- The koba leaf band, with the croissant rising out of it in front. --}}
+    <div class="hero__stage">
+        <x-site.img src="hero-leaves" class="hero__leaves" :eager="true" alt="" sizes="100vw" />
+        <div class="hero__subject">
+            <x-site.img src="hero-croissant" :eager="true" sizes="(min-width: 900px) 52vw, 86vw" />
         </div>
-
-        <figure class="hero__inset" data-mouse="-16">
-            <div class="media">
-                <x-site.img src="drink-flat-white" sizes="200px" position="50% 60%" />
-            </div>
-            <figcaption>{{ __('koba.intro.rituals.0') }}</figcaption>
-        </figure>
-
         <p class="hero__caption">
             <span class="index">{{ __('koba.hero.caption_no') }}</span>
             <span>{{ __('koba.hero.caption') }}</span>

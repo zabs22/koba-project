@@ -15,6 +15,10 @@
 return [
 
     'images' => [
+        // Homepage hero: cut-out subject (transparent) over the koba leaf band.
+        'hero-croissant' => [712, 737, [480, 712], 'A KOBA croissant wrapped in a green koba leaf, held in hand'],
+        'hero-leaves' => [1515, 392, [960, 1515], ''],
+
         'croissant' => [3799, 5762, [800, 1400, 2200], 'A glossy, freshly baked KOBA croissant on a dark wooden board'],
         'almond-croissant' => [4160, 6240, [480, 960, 1600], 'Almond croissant dusted with icing sugar'],
         'bomboloni' => [3860, 5919, [480, 960, 1600], 'Sugar-dusted doughnut on a dark serving board'],

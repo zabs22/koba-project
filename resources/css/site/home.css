@@ -9,79 +9,87 @@
 .leaf__rib { stroke: var(--rib); }
 
 /* ==========================================================================
-   01 — Hero
+   01 — Hero: croissant in a koba leaf, rising from the leaf band
    ========================================================================== */
 
 .hero {
+    --band-h: min(25.9vw, 38vh, 460px);
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
-    min-height: max(660px, 94vh);
-    min-height: max(660px, 94svh);
+    display: flex;
+    align-items: center;
+    min-height: max(680px, 100vh);
+    min-height: max(680px, 100svh);
     padding-top: var(--header-h);
+    padding-bottom: var(--band-h);
     background: var(--cream);
+    overflow: hidden;
 }
 
 .hero__copy {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: flex-start;
-    gap: 28px;
-    padding: clamp(40px, 6vh, 72px) clamp(24px, 3.5vw, 64px) clamp(96px, 13vh, 140px) max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+    gap: 26px;
+    width: min(48vw, 660px);
+    margin-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+    padding-block: clamp(16px, 3vh, 48px);
 }
-
-.hero__title {
-    font-size: clamp(2.5rem, 3.75vw, 4.9rem);
-    line-height: 1;
-}
+.hero__title { font-size: clamp(2.5rem, 3.75vw, 4.9rem); line-height: 1; }
 .hero__title .line { padding-bottom: 0.1em; }
 .hero__title em { color: var(--g-600); }
-
 .hero__lede { max-width: 34ch; }
 
-.hero__media { position: relative; }
+/* Stage: the leaf band and the subject, behind and beside the copy. */
+.hero__stage { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 
-.hero__frame { position: absolute; inset: 0; }
-.hero__frame img {
-    transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 10px), 0) scale(1.16);
-    transition: transform 2.8s var(--ease-out);
-}
-.is-ready .hero__frame img,
-.no-js .hero__frame img { transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 10px), 0) scale(1.05); }
-.is-ready .hero.is-tracking .hero__frame img { transition-duration: 1.2s; }
-
-.hero__inset {
+.hero__leaves {
     position: absolute;
-    left: clamp(-120px, -7vw, -60px);
-    bottom: 13%;
-    z-index: 2;
-    width: clamp(150px, 13.5vw, 220px);
-    transform: translate3d(calc(var(--mx, 0) * -16px), calc(var(--my, 0) * -16px), 0);
-    transition: transform 1.2s var(--ease-out), opacity 1s var(--ease) 0.9s, translate 1.4s var(--ease-out) 0.9s;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--band-h);
+    object-fit: cover;
+    object-position: 50% 0;
+    transform: translate3d(calc(var(--mx, 0) * 6px), 0, 0) scale(1.02);
+    transform-origin: 50% 100%;
+    transition: transform 1.6s var(--ease-out);
 }
-.hero__inset .media {
-    aspect-ratio: 4 / 5;
-    box-shadow: 0 0 0 8px var(--cream);
+
+.hero__subject {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: min(calc(100% - var(--header-h) - 16px), 50vw);
+    aspect-ratio: 712 / 737;
+    transform: translate3d(calc(var(--mx, 0) * -12px), calc(var(--my, 0) * -8px), 0);
+    transition: transform 1.4s var(--ease-out);
 }
-.hero__inset figcaption {
-    margin-top: 18px;
-    font-size: var(--t-micro);
-    letter-spacing: 0.04em;
-    color: var(--ink-soft);
+.hero__subject img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: 100% 100%;
+    filter: drop-shadow(-18px 24px 36px rgba(3, 35, 26, 0.22));
 }
-.js .hero__inset { opacity: 0; translate: 0 30px; }
-.js.is-ready .hero__inset { opacity: 1; translate: 0 0; }
+.js .hero__subject img {
+    opacity: 0;
+    transform: translate3d(0, 9%, 0) scale(0.97);
+    transform-origin: 80% 100%;
+    transition: opacity 1.2s var(--ease) 0.2s, transform 2.2s var(--ease-out) 0.2s;
+}
+.js.is-ready .hero__subject img { opacity: 1; transform: none; }
 
 .hero__caption {
     position: absolute;
-    right: var(--gutter);
+    left: max(26vw, 340px);
     bottom: 28px;
     z-index: 2;
     display: flex;
     gap: 14px;
     align-items: baseline;
-    max-width: 30ch;
+    max-width: 36ch;
     color: var(--cream);
     font-size: var(--t-micro);
     letter-spacing: 0.04em;
@@ -92,6 +100,7 @@
     position: absolute;
     left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
     bottom: 32px;
+    z-index: 2;
     display: flex;
     align-items: center;
     gap: 14px;
@@ -99,20 +108,20 @@
     font-weight: 600;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: var(--cream);
 }
 .hero__scroll i {
     position: relative;
     width: 64px;
     height: 1px;
-    background: var(--line);
+    background: rgba(255, 245, 230, 0.3);
     overflow: hidden;
 }
 .hero__scroll i::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: var(--g-900);
+    background: var(--cream);
     animation: scroll-line 2.8s var(--ease-in-out) infinite;
 }
 @keyframes scroll-line {
@@ -122,12 +131,13 @@
 }
 
 @media (max-width: 899px) {
-    .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-    .hero__media { order: -1; height: min(62vh, 118vw); }
-    .hero__copy { padding: 40px var(--gutter) 96px; }
+    .hero { display: block; min-height: 0; padding-bottom: 0; }
+    .hero__copy { width: auto; margin: 0; padding: 40px var(--gutter) 24px; }
     .hero__title { font-size: clamp(2.4rem, 10.5vw, 3.6rem); }
-    .hero__inset { left: auto; right: var(--gutter); bottom: -36px; width: 112px; }
-    .hero__inset figcaption, .hero__caption { display: none; }
+    .hero__stage { position: relative; inset: auto; height: min(112vw, 560px); }
+    .hero__leaves { height: 48%; object-position: 18% 0; }
+    .hero__subject { height: 100%; }
+    .hero__caption, .hero__scroll { display: none; }
 }
 
 /* ==========================================================================
@@ -516,46 +526,87 @@
 }
 
 /* ==========================================================================
-   05 — The craft
+   05 — The craft: tight masonry gallery
    ========================================================================== */
 
 .craft__head { align-items: end; row-gap: 32px; }
 .craft__heading { grid-column: 1 / span 7; display: grid; gap: 28px; justify-items: start; }
 .craft__lede { grid-column: 9 / -1; color: var(--ink); }
 
-.craft__grid {
+.craft__masonry {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--col-gap);
-    row-gap: clamp(56px, 8vw, 128px);
-    margin-top: clamp(64px, 8vw, 128px);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: clamp(48px, 6vw, 88px);
 }
-.craft__item--1 { grid-column: 1 / span 6; grid-row: 1; }
-.craft__item--1 .media { aspect-ratio: 1 / 1.08; }
-.craft__item--2 { grid-column: 8 / span 4; grid-row: 1; align-self: end; }
-.craft__item--2 .media { aspect-ratio: 1 / 1; }
-.craft__item--3 { grid-column: 7 / -1; grid-row: 2; }
-.craft__item--3 .media { aspect-ratio: 4 / 3; }
-.craft__item--4 { grid-column: 2 / span 4; grid-row: 2; align-self: start; margin-top: clamp(-160px, -9vw, -40px); }
-.craft__item--4 .media { aspect-ratio: 4 / 5; }
-.craft__item--5 { grid-column: 4 / span 6; grid-row: 3; }
-.craft__item--5 .media { aspect-ratio: 16 / 10; }
+.craft__col { display: flex; flex-direction: column; gap: 12px; }
+.craft__tile { break-inside: avoid; }
+.craft__figure { display: block; }
+
+/* The last tile in each column stretches so all three columns end level. */
+.craft__tile:last-child { flex: 1; display: flex; }
+.craft__tile:last-child .craft__figure { flex: 1; min-height: 100%; }
+.craft__tile:last-child .craft__figure > img { position: absolute; inset: 0; }
+.craft__figure > img { transition: transform 1.4s var(--ease-out); }
+.craft__figure:hover > img { transform: scale(1.04); }
 
 .craft__caption {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 2;
     display: grid;
-    grid-template-columns: 40px minmax(0, 1fr);
-    column-gap: 12px;
-    row-gap: 4px;
-    margin-top: 20px;
+    grid-template-columns: auto auto;
+    align-items: baseline;
+    column-gap: 10px;
+    max-width: calc(100% - 24px);
+    padding: 10px 14px;
+    background: var(--cream);
+    color: var(--g-900);
 }
-.craft__caption .index { grid-row: span 2; padding-top: 0.5em; color: var(--brown); }
-.craft__caption span:last-child { color: var(--ink-soft); font-size: var(--t-small); }
+.craft__caption .index { color: var(--brown); }
+.craft__caption strong {
+    font-family: var(--f-display);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+.craft__line {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    font-size: var(--t-small);
+    color: var(--ink-soft);
+}
 
+/* With a mouse, the line opens on hover; touch screens always show it. */
+@media (hover: hover) {
+    .craft__line {
+        max-height: 0;
+        margin-top: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.6s var(--ease-out), margin 0.6s var(--ease-out), opacity 0.4s var(--ease);
+    }
+    .craft__figure:hover .craft__line,
+    .craft__figure:focus-within .craft__line { max-height: 3em; margin-top: 4px; opacity: 1; }
+}
+
+/* Narrower screens: a simple two-column flow (the column wrappers dissolve). */
+@media (max-width: 1099px) {
+    .craft__masonry { display: block; columns: 2; column-gap: 12px; }
+    .craft__col { display: contents; }
+    .craft__tile { margin-bottom: 12px; }
+    .craft__tile:last-child { display: block; }
+    .craft__tile:last-child .craft__figure > img { position: static; }
+}
 @media (max-width: 899px) {
     .craft__heading, .craft__lede { grid-column: 1 / -1; }
-    .craft__item { grid-row: auto !important; margin-top: 0 !important; }
-    .craft__item:nth-child(odd) { grid-column: 1 / span 10; }
-    .craft__item:nth-child(even) { grid-column: 3 / -1; }
+}
+@media (max-width: 559px) {
+    .craft__masonry { columns: 2; column-gap: 8px; }
+    .craft__tile { margin-bottom: 8px; }
+    .craft__caption { left: 8px; bottom: 8px; padding: 6px 10px; }
+    .craft__line { display: none; }
 }
 
 /* ==========================================================================
